@@ -46,4 +46,111 @@ try {
     }
  
  }
+
+//? fetchPost 
+ public function fetchPost(Request $req){
+             
+   try {
+       $vali = $req->validate([
+       'user_id'=> 'required|exists:usersPosts,user_id'
+      ]);
+
+
+
+
+      $data =  DB::table('usersPosts')->where('user_id',$vali['user_id'])->get();
+
+       return response()->json([
+        'message'=>'bjeeeeet Kurdista',
+        'user_id'=>$data,
+       ]);
+
+
+    }  catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json([
+            'message' => 'Validation failed',
+            'errors' => $e->errors()
+        ], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Something went wrong',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+
+ }
+
+  // ? deletPost 
+ public function deletPost(Request $req){
+   
+      
+   try {
+ $vali= $req->validate([
+     'postID'=>'required|exists:usersPosts,postID',
+    ]);
+
+       DB::table('usersPosts')->where('postID',$vali['postID'])->delete();
+       return response()->json([
+      'message'=>'there post has been deleted SuccsesFully',
+        
+       ]);
+   }  catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json([
+            'message' => 'Validation failed',
+            'errors' => $e->errors()
+        ], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Something went wrong',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+
+
+ }
+ 
+
+
+
+
+
+
+
+
+
+
+ //? updatePost
+     public function updatePost(Request $req){
+
+
+  try {
+        $vali = $req->validate([
+        'post_id'=>'required|exists:usersPosts,postID',
+        'title'=> 'sometimes|string|max:50',
+        'des'=> 'sometimes|string',
+        'image'=>'nullable|string'
+      ]);
+$updateData = collect($vali)->except('post_id')->toArray();
+       DB::table('usersPosts')->where('postID',$vali['post_id'])->update($updateData);
+       print_r($updateData);
+       return response()->json([
+        'mesage'=> 'post updated succsefully',
+       ]);
+
+  }  
+  catch (\Illuminate\Validation\ValidationException $e) {
+        return response()->json([
+            'message' => 'Validation failed',
+            'errors' => $e->errors()
+        ], 422);
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Something went wrong',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+ 
+     }
+
+ 
 }
