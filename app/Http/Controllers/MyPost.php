@@ -94,7 +94,7 @@ class MyPost extends Controller
             ]);
 
             $updateData = collect($vali)->toArray();
-
+ 
             DB::table('usersPosts')
                 ->where('postID', $postId)
                 ->update($updateData);
