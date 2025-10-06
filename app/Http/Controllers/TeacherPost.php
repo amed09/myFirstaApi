@@ -10,10 +10,11 @@ class TeacherPost extends Controller
  public function createTeacherPost( Request $req){
     try {
         $vali = $req->validate([
-           'userId'=> 'required|int|exists:users,id',
+                'userId'=> 'required|int|exists:users,id',
                 'title'=> 'required|string|max:50',
                 'des'=> 'required|string',
                 'image'=>'nullable|string'
+                
        ]);
         $postId  = (int)(microtime(true) * 1000000);
    DB::table('teacherpos')->insert([
@@ -34,36 +35,5 @@ class TeacherPost extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
-
-
-
-
-
-
-        
-
-
-
-
-
-
  }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
