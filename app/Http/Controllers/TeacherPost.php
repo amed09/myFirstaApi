@@ -14,7 +14,6 @@ class TeacherPost extends Controller
                 'title'=> 'required|string|max:50',
                 'des'=> 'required|string',
                 'image'=>'nullable|string'
-                
        ]);
         $postId  = (int)(microtime(true) * 1000000);
    DB::table('teacherpos')->insert([
@@ -36,4 +35,10 @@ class TeacherPost extends Controller
             ], 500);
         }
  }
+
+
+//  public function 
+
+
+
 }
